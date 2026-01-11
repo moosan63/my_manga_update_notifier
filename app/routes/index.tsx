@@ -14,10 +14,11 @@ export default createRoute(async (c) => {
       <div class="mb-6">
         <a
           href="/mangas/new"
-          class="btn-gradient inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-lg font-medium"
+          class="btn-gradient inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-lg font-medium hover:scale-105 transition-transform duration-200 shadow-lg hover:shadow-xl hover:shadow-gaming-purple/30"
         >
-          <span class="text-lg">+</span>
+          <span class="text-lg">✨</span>
           <span>新規追加</span>
+          <span class="text-lg">➕</span>
         </a>
       </div>
       <MangaList mangas={mangas} />

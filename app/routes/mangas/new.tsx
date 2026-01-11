@@ -7,7 +7,7 @@ export default createRoute((c) => {
   return c.render(
     <Layout title="漫画を追加" showBackLink>
       <title>漫画を追加</title>
-      <div class="card-gaming bg-gaming-card rounded-lg p-6">
+      <div class="card-gaming bg-gaming-card rounded-lg p-6 transition-all duration-300 hover:shadow-xl hover:shadow-gaming-purple/10">
         <MangaForm action="/mangas/new" />
       </div>
     </Layout>
@@ -27,8 +27,11 @@ export const POST = createRoute(async (c) => {
     return c.render(
       <Layout title="漫画を追加" showBackLink>
         <title>漫画を追加</title>
-        <div class="bg-gaming-pink/20 text-gaming-pink p-4 rounded-lg mb-4 border border-gaming-pink/30">タイトルは必須です</div>
-        <div class="card-gaming bg-gaming-card rounded-lg p-6">
+        <div class="bg-gaming-pink/20 text-gaming-pink p-4 rounded-lg mb-4 border border-gaming-pink/30 flex items-center gap-2">
+          <span>❌</span>
+          <span>タイトルは必須です</span>
+        </div>
+        <div class="card-gaming bg-gaming-card rounded-lg p-6 transition-all duration-300 hover:shadow-xl hover:shadow-gaming-purple/10">
           <MangaForm action="/mangas/new" />
         </div>
       </Layout>
@@ -39,8 +42,11 @@ export const POST = createRoute(async (c) => {
     return c.render(
       <Layout title="漫画を追加" showBackLink>
         <title>漫画を追加</title>
-        <div class="bg-gaming-pink/20 text-gaming-pink p-4 rounded-lg mb-4 border border-gaming-pink/30">URLは必須です</div>
-        <div class="card-gaming bg-gaming-card rounded-lg p-6">
+        <div class="bg-gaming-pink/20 text-gaming-pink p-4 rounded-lg mb-4 border border-gaming-pink/30 flex items-center gap-2">
+          <span>❌</span>
+          <span>URLは必須です</span>
+        </div>
+        <div class="card-gaming bg-gaming-card rounded-lg p-6 transition-all duration-300 hover:shadow-xl hover:shadow-gaming-purple/10">
           <MangaForm action="/mangas/new" />
         </div>
       </Layout>
@@ -52,8 +58,11 @@ export const POST = createRoute(async (c) => {
     return c.render(
       <Layout title="漫画を追加" showBackLink>
         <title>漫画を追加</title>
-        <div class="bg-gaming-pink/20 text-gaming-pink p-4 rounded-lg mb-4 border border-gaming-pink/30">曜日を選択してください</div>
-        <div class="card-gaming bg-gaming-card rounded-lg p-6">
+        <div class="bg-gaming-pink/20 text-gaming-pink p-4 rounded-lg mb-4 border border-gaming-pink/30 flex items-center gap-2">
+          <span>❌</span>
+          <span>曜日を選択してください</span>
+        </div>
+        <div class="card-gaming bg-gaming-card rounded-lg p-6 transition-all duration-300 hover:shadow-xl hover:shadow-gaming-purple/10">
           <MangaForm action="/mangas/new" />
         </div>
       </Layout>

@@ -20,20 +20,24 @@ export const Layout: FC<PropsWithChildren<LayoutProps>> = ({
             {showBackLink && (
               <a
                 href={backLinkHref}
-                class="text-gaming-text-muted hover:text-gaming-purple-light flex items-center gap-1 transition-colors duration-200"
+                class="text-gaming-text-muted hover:text-gaming-purple-light flex items-center gap-1.5 transition-colors duration-200 group"
               >
-                <span>&larr;</span>
+                <span class="text-lg group-hover:animate-pulse">🔙</span>
                 <span>戻る</span>
               </a>
             )}
-            <h1 class="text-xl font-bold text-gaming-text text-neon">{title}</h1>
+            <h1 class="text-xl font-bold text-gaming-text text-neon flex items-center gap-2">
+              <span class="text-2xl">📚</span>
+              {title}
+            </h1>
           </div>
           {!showBackLink && (
             <a
               href="/settings"
-              class="text-gaming-text-muted hover:text-gaming-purple-light px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-gaming-card"
+              class="text-gaming-text-muted hover:text-gaming-purple-light px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:bg-gaming-card flex items-center gap-1.5 hover:scale-105"
             >
-              設定
+              <span>⚙️</span>
+              <span>設定</span>
             </a>
           )}
         </div>
