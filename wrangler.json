@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "manga-update-notifier",
+  "main": "./dist/index.js",
+  "compatibility_date": "2026-01-11",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": "./dist"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "manga-update-notifier-db",
+      "database_id": "local"
+    }
+  ],
+  "triggers": {
+    "crons": ["0 15 * * *"]
+  }
+}
