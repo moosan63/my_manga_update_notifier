@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(npm create:*)",
+      "Bash(test:*)",
+      "Bash(/bin/ls:*)",
+      "Bash(yes:*)",
+      "Bash(npm install)",
+      "Bash(npx wrangler:*)",
+      "Bash(npm install:*)",
+      "Bash(npm test:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(curl:*)"
+    ]
+  },
+  "outputStyle": "default"
+}
