@@ -1,1 +1,91 @@
 @import 'tailwindcss' source('../app');
+
+/* Gaming/Discord-style Custom Theme */
+@theme {
+  /* Dark background colors */
+  --color-gaming-dark: #0f0f23;
+  --color-gaming-darker: #0a0a1a;
+  --color-gaming-card: #1a1a2e;
+  --color-gaming-card-hover: #252542;
+  --color-gaming-surface: #16213e;
+
+  /* Accent colors */
+  --color-gaming-purple: #7c3aed;
+  --color-gaming-purple-light: #a78bfa;
+  --color-gaming-cyan: #06b6d4;
+  --color-gaming-pink: #ec4899;
+  --color-gaming-blue: #3b82f6;
+
+  /* Text colors */
+  --color-gaming-text: #e2e8f0;
+  --color-gaming-text-muted: #94a3b8;
+  --color-gaming-text-accent: #a78bfa;
+}
+
+/* Glow effects */
+.glow-purple {
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.4), 0 0 40px rgba(124, 58, 237, 0.2);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4), 0 0 40px rgba(6, 182, 212, 0.2);
+}
+
+.glow-pink {
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.4), 0 0 40px rgba(236, 72, 153, 0.2);
+}
+
+/* Hover glow animation */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 25px rgba(124, 58, 237, 0.5), 0 0 50px rgba(124, 58, 237, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Gradient button */
+.btn-gradient {
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(135deg, #8b5cf6 0%, #f472b6 100%);
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Input focus glow */
+.input-gaming {
+  transition: all 0.3s ease;
+}
+
+.input-gaming:focus {
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.5), 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
+/* Card border gradient */
+.card-gaming {
+  position: relative;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  transition: all 0.3s ease;
+}
+
+.card-gaming:hover {
+  border-color: rgba(124, 58, 237, 0.6);
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.2);
+}
+
+/* Neon text */
+.text-neon {
+  text-shadow: 0 0 10px rgba(167, 139, 250, 0.5), 0 0 20px rgba(167, 139, 250, 0.3);
+}
+
+/* Header gradient */
+.header-gradient {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+}

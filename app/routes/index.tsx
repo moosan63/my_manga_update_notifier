@@ -14,9 +14,9 @@ export default createRoute(async (c) => {
       <div class="mb-6">
         <a
           href="/mangas/new"
-          class="inline-flex items-center gap-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          class="btn-gradient inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-lg font-medium"
         >
-          <span>+</span>
+          <span class="text-lg">+</span>
           <span>新規追加</span>
         </a>
       </div>

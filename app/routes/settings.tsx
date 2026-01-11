@@ -16,10 +16,10 @@ export default createRoute(async (c) => {
   return c.render(
     <Layout title="設定" showBackLink>
       <title>設定</title>
-      <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+      <div class="card-gaming bg-gaming-card rounded-lg p-6">
         <form method="post" action="/settings" class="space-y-6">
           <div>
-            <label for="slackWebhookUrl" class="block text-sm font-medium text-gray-700">
+            <label for="slackWebhookUrl" class="block text-sm font-medium text-gaming-text-muted mb-1">
               Slack Webhook URL
             </label>
             <input
@@ -27,10 +27,10 @@ export default createRoute(async (c) => {
               id="slackWebhookUrl"
               name="slackWebhookUrl"
               value={slackWebhookUrl}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              class="input-gaming mt-1 block w-full rounded-lg border border-gaming-purple/30 bg-gaming-darker px-3 py-2 text-gaming-text placeholder-gaming-text-muted/50 focus:border-gaming-purple focus:outline-none"
               placeholder="https://hooks.slack.com/services/..."
             />
-            <p class="mt-2 text-sm text-gray-500">
+            <p class="mt-2 text-sm text-gaming-text-muted/70">
               Slack Incoming Webhook URLを入力してください
             </p>
           </div>
@@ -38,7 +38,7 @@ export default createRoute(async (c) => {
           <div class="pt-4">
             <button
               type="submit"
-              class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              class="btn-gradient w-full text-white py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-gaming-purple focus:ring-offset-2 focus:ring-offset-gaming-dark"
             >
               保存する
             </button>
@@ -59,13 +59,13 @@ export const POST = createRoute(async (c) => {
     return c.render(
       <Layout title="設定" showBackLink>
         <title>設定</title>
-        <div class="bg-red-50 text-red-700 p-4 rounded-md mb-4">
+        <div class="bg-gaming-pink/20 text-gaming-pink p-4 rounded-lg mb-4 border border-gaming-pink/30">
           Slack Webhook URLは必須です
         </div>
-        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div class="card-gaming bg-gaming-card rounded-lg p-6">
           <form method="post" action="/settings" class="space-y-6">
             <div>
-              <label for="slackWebhookUrl" class="block text-sm font-medium text-gray-700">
+              <label for="slackWebhookUrl" class="block text-sm font-medium text-gaming-text-muted mb-1">
                 Slack Webhook URL
               </label>
               <input
@@ -73,10 +73,10 @@ export const POST = createRoute(async (c) => {
                 id="slackWebhookUrl"
                 name="slackWebhookUrl"
                 value=""
-                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                class="input-gaming mt-1 block w-full rounded-lg border border-gaming-purple/30 bg-gaming-darker px-3 py-2 text-gaming-text placeholder-gaming-text-muted/50 focus:border-gaming-purple focus:outline-none"
                 placeholder="https://hooks.slack.com/services/..."
               />
-              <p class="mt-2 text-sm text-gray-500">
+              <p class="mt-2 text-sm text-gaming-text-muted/70">
                 Slack Incoming Webhook URLを入力してください
               </p>
             </div>
@@ -84,7 +84,7 @@ export const POST = createRoute(async (c) => {
             <div class="pt-4">
               <button
                 type="submit"
-                class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                class="btn-gradient w-full text-white py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-gaming-purple focus:ring-offset-2 focus:ring-offset-gaming-dark"
               >
                 保存する
               </button>
@@ -108,11 +108,11 @@ export const POST = createRoute(async (c) => {
   return c.render(
     <Layout title="設定" showBackLink>
       <title>設定</title>
-      <div class="bg-green-50 text-green-700 p-4 rounded-md mb-4">設定を保存しました</div>
-      <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+      <div class="bg-gaming-cyan/20 text-gaming-cyan p-4 rounded-lg mb-4 border border-gaming-cyan/30">設定を保存しました</div>
+      <div class="card-gaming bg-gaming-card rounded-lg p-6">
         <form method="post" action="/settings" class="space-y-6">
           <div>
-            <label for="slackWebhookUrl" class="block text-sm font-medium text-gray-700">
+            <label for="slackWebhookUrl" class="block text-sm font-medium text-gaming-text-muted mb-1">
               Slack Webhook URL
             </label>
             <input
@@ -120,10 +120,10 @@ export const POST = createRoute(async (c) => {
               id="slackWebhookUrl"
               name="slackWebhookUrl"
               value={slackWebhookUrl.trim()}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              class="input-gaming mt-1 block w-full rounded-lg border border-gaming-purple/30 bg-gaming-darker px-3 py-2 text-gaming-text placeholder-gaming-text-muted/50 focus:border-gaming-purple focus:outline-none"
               placeholder="https://hooks.slack.com/services/..."
             />
-            <p class="mt-2 text-sm text-gray-500">
+            <p class="mt-2 text-sm text-gaming-text-muted/70">
               Slack Incoming Webhook URLを入力してください
             </p>
           </div>
@@ -131,7 +131,7 @@ export const POST = createRoute(async (c) => {
           <div class="pt-4">
             <button
               type="submit"
-              class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              class="btn-gradient w-full text-white py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-gaming-purple focus:ring-offset-2 focus:ring-offset-gaming-dark"
             >
               保存する
             </button>

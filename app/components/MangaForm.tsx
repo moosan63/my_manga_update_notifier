@@ -21,7 +21,7 @@ export const MangaForm: FC<MangaFormProps> = ({ manga, action, submitLabel = '�
   return (
     <form method="post" action={action} class="space-y-6">
       <div>
-        <label for="title" class="block text-sm font-medium text-gray-700">
+        <label for="title" class="block text-sm font-medium text-gaming-text-muted mb-1">
           タイトル
         </label>
         <input
@@ -30,13 +30,13 @@ export const MangaForm: FC<MangaFormProps> = ({ manga, action, submitLabel = '�
           name="title"
           required
           value={manga?.title || ''}
-          class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          class="input-gaming mt-1 block w-full rounded-lg border border-gaming-purple/30 bg-gaming-darker px-3 py-2 text-gaming-text placeholder-gaming-text-muted/50 focus:border-gaming-purple focus:outline-none"
           placeholder="ワンピース"
         />
       </div>
 
       <div>
-        <label for="url" class="block text-sm font-medium text-gray-700">
+        <label for="url" class="block text-sm font-medium text-gaming-text-muted mb-1">
           URL
         </label>
         <input
@@ -45,18 +45,18 @@ export const MangaForm: FC<MangaFormProps> = ({ manga, action, submitLabel = '�
           name="url"
           required
           value={manga?.url || ''}
-          class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          class="input-gaming mt-1 block w-full rounded-lg border border-gaming-purple/30 bg-gaming-darker px-3 py-2 text-gaming-text placeholder-gaming-text-muted/50 focus:border-gaming-purple focus:outline-none"
           placeholder="https://..."
         />
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">更新曜日</label>
+        <label class="block text-sm font-medium text-gaming-text-muted mb-2">更新曜日</label>
         <div class="flex gap-2">
           {DAYS_OF_WEEK.map((day) => (
             <label
               key={day.value}
-              class="flex items-center justify-center w-10 h-10 border rounded-md cursor-pointer hover:bg-gray-50 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-500"
+              class="flex items-center justify-center w-10 h-10 border border-gaming-purple/30 rounded-lg cursor-pointer bg-gaming-darker text-gaming-text-muted transition-all duration-200 hover:border-gaming-purple hover:bg-gaming-card has-[:checked]:bg-gradient-to-br has-[:checked]:from-gaming-purple has-[:checked]:to-gaming-pink has-[:checked]:text-white has-[:checked]:border-transparent has-[:checked]:shadow-lg"
             >
               <input
                 type="radio"
@@ -66,7 +66,7 @@ export const MangaForm: FC<MangaFormProps> = ({ manga, action, submitLabel = '�
                 required
                 class="sr-only"
               />
-              <span>{day.label}</span>
+              <span class="font-medium">{day.label}</span>
             </label>
           ))}
         </div>
@@ -75,7 +75,7 @@ export const MangaForm: FC<MangaFormProps> = ({ manga, action, submitLabel = '�
       <div class="pt-4">
         <button
           type="submit"
-          class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          class="btn-gradient w-full text-white py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-gaming-purple focus:ring-offset-2 focus:ring-offset-gaming-dark"
         >
           {submitLabel}
         </button>

@@ -7,7 +7,7 @@ export default createRoute((c) => {
   return c.render(
     <Layout title="漫画を追加" showBackLink>
       <title>漫画を追加</title>
-      <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+      <div class="card-gaming bg-gaming-card rounded-lg p-6">
         <MangaForm action="/mangas/new" />
       </div>
     </Layout>
@@ -27,8 +27,8 @@ export const POST = createRoute(async (c) => {
     return c.render(
       <Layout title="漫画を追加" showBackLink>
         <title>漫画を追加</title>
-        <div class="bg-red-50 text-red-700 p-4 rounded-md mb-4">タイトルは必須です</div>
-        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div class="bg-gaming-pink/20 text-gaming-pink p-4 rounded-lg mb-4 border border-gaming-pink/30">タイトルは必須です</div>
+        <div class="card-gaming bg-gaming-card rounded-lg p-6">
           <MangaForm action="/mangas/new" />
         </div>
       </Layout>
@@ -39,8 +39,8 @@ export const POST = createRoute(async (c) => {
     return c.render(
       <Layout title="漫画を追加" showBackLink>
         <title>漫画を追加</title>
-        <div class="bg-red-50 text-red-700 p-4 rounded-md mb-4">URLは必須です</div>
-        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div class="bg-gaming-pink/20 text-gaming-pink p-4 rounded-lg mb-4 border border-gaming-pink/30">URLは必須です</div>
+        <div class="card-gaming bg-gaming-card rounded-lg p-6">
           <MangaForm action="/mangas/new" />
         </div>
       </Layout>
@@ -52,8 +52,8 @@ export const POST = createRoute(async (c) => {
     return c.render(
       <Layout title="漫画を追加" showBackLink>
         <title>漫画を追加</title>
-        <div class="bg-red-50 text-red-700 p-4 rounded-md mb-4">曜日を選択してください</div>
-        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div class="bg-gaming-pink/20 text-gaming-pink p-4 rounded-lg mb-4 border border-gaming-pink/30">曜日を選択してください</div>
+        <div class="card-gaming bg-gaming-card rounded-lg p-6">
           <MangaForm action="/mangas/new" />
         </div>
       </Layout>
