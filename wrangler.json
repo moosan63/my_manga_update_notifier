@@ -3,9 +3,7 @@
   "name": "manga-update-notifier",
   "main": "./dist/index.js",
   "compatibility_date": "2026-01-11",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "./dist"
   },
@@ -13,7 +11,12 @@
     {
       "binding": "DB",
       "database_name": "manga-update-notifier-db",
-      "database_id": "local"
+      "database_id": "b1bf4a6a-2e0c-4d86-993a-07775c48b260"
+    },
+    {
+      "binding": "manga_update_notifier_db",
+      "database_name": "manga-update-notifier-db",
+      "database_id": "b1bf4a6a-2e0c-4d86-993a-07775c48b260"
     }
   ],
   "triggers": {
