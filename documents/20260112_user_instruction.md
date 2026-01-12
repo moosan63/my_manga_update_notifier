@@ -57,14 +57,27 @@ npx wrangler d1 migrations apply DB --remote
 
 ---
 
-## 3. デプロイ
+## 3. Basic認証の設定
 
-### 3.1 ビルド＆デプロイ
+### 3.1 本番環境用のsecretsを設定
+```bash
+# ユーザー名を設定（入力を求められます）
+npx wrangler secret put BASIC_AUTH_USER
+
+# パスワードを設定（入力を求められます）
+npx wrangler secret put BASIC_AUTH_PASS
+```
+
+---
+
+## 4. デプロイ
+
+### 4.1 ビルド＆デプロイ
 ```bash
 npm run deploy
 ```
 
-### 3.2 デプロイ完了後
+### 4.2 デプロイ完了後
 出力されたURLにアクセスして動作確認：
 ```
 https://manga-update-notifier.<your-subdomain>.workers.dev/
@@ -72,9 +85,9 @@ https://manga-update-notifier.<your-subdomain>.workers.dev/
 
 ---
 
-## 4. Slack Webhook URLの設定
+## 5. Slack Webhook URLの設定
 
-### 4.1 Slack Incoming Webhookを作成
+### 5.1 Slack Incoming Webhookを作成
 1. https://api.slack.com/apps にアクセス
 2. 「Create New App」→「From scratch」
 3. アプリ名と通知先ワークスペースを選択
@@ -82,20 +95,20 @@ https://manga-update-notifier.<your-subdomain>.workers.dev/
 5. 「Add New Webhook to Workspace」で通知先チャンネルを選択
 6. 生成されたWebhook URLをコピー
 
-### 4.2 アプリで設定
+### 5.2 アプリで設定
 1. デプロイしたアプリにアクセス
 2. 右上の「設定」をクリック
 3. Slack Webhook URLを貼り付けて「保存する」
 
 ---
 
-## 5. 動作確認
+## 6. 動作確認
 
-### 5.1 漫画を登録
+### 6.1 漫画を登録
 1. トップページで「+ 新規追加」をクリック
 2. タイトル、URL、更新曜日を入力して保存
 
-### 5.2 Cron動作確認（任意）
+### 6.2 Cron動作確認（任意）
 手動でCronをテストする場合：
 ```bash
 npx wrangler dev --test-scheduled
@@ -107,11 +120,12 @@ curl "http://localhost:8787/__scheduled?cron=0+15+*+*+*"
 
 ---
 
-## 6. 注意事項
+## 7. 注意事項
 
 - Cronは毎日 UTC 15:00（JST 0:00）に実行されます
 - 該当曜日の漫画がある場合のみSlackに通知されます
 - Webhook URLが未設定の場合、通知はスキップされます
+- Basic認証が必須です（secretsが未設定の場合、アクセスできません）
 
 ---
 

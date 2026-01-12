@@ -37,7 +37,14 @@
 - [x] Slack通知送信関数の実装
 - [x] Cronハンドラの実装（scheduledイベント）
 
+## 認証機能
+
+- [x] Basic認証ミドルウェアの実装（app/server.ts）
+- [x] .dev.vars.example テンプレート作成
+- [x] ローカルでの認証動作確認
+
 ## 完了
 
 - [x] ローカルでの動作確認
 - [ ] Cloudflareへのデプロイ
+- [ ] 本番環境でsecretsを設定（BASIC_AUTH_USER, BASIC_AUTH_PASS）

@@ -34,7 +34,19 @@ RSSに対応していない漫画の更新情報をSlackに通知するWebアプ
 
 ### ユーザー
 
-- 自分専用（認証なし）
+- 自分専用（Basic認証で保護）
+
+### 認証
+
+- **方式**: Basic認証（`hono/basic-auth`ミドルウェア）
+- **適用範囲**: 全HTTPリクエスト（Web画面・API）
+- **除外対象**: Cron Triggers（scheduledイベントはHTTP経由でないため対象外）
+- **認証情報の管理**:
+  - ローカル開発: `.dev.vars`ファイル（gitignore対象）
+  - 本番環境: Cloudflare Workers secrets
+- **環境変数**:
+  - `BASIC_AUTH_USER`: ユーザー名
+  - `BASIC_AUTH_PASS`: パスワード
 
 ### 技術スタック
 
