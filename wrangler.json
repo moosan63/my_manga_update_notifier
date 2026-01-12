@@ -19,6 +19,7 @@
   },
   "env": {
     "production": {
+      "name": "manga-update-notifier",
       "d1_databases": [
         {
           "binding": "DB",
