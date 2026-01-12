@@ -11,15 +11,21 @@
     {
       "binding": "DB",
       "database_name": "manga-update-notifier-db",
-      "database_id": "b1bf4a6a-2e0c-4d86-993a-07775c48b260"
-    },
-    {
-      "binding": "manga_update_notifier_db",
-      "database_name": "manga-update-notifier-db",
-      "database_id": "b1bf4a6a-2e0c-4d86-993a-07775c48b260"
+      "database_id": "local"
     }
   ],
   "triggers": {
     "crons": ["0 15 * * *"]
+  },
+  "env": {
+    "production": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "manga-update-notifier-db",
+          "database_id": "b1bf4a6a-2e0c-4d86-993a-07775c48b260"
+        }
+      ]
+    }
   }
 }
