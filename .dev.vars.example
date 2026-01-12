@@ -1,0 +1,6 @@
+# Basic認証の設定
+# このファイルを .dev.vars にコピーして、実際の値を設定してください
+# cp .dev.vars.example .dev.vars
+
+BASIC_AUTH_USER=your_username
+BASIC_AUTH_PASS=your_password
