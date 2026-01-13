@@ -14,7 +14,10 @@
       "Bash(npx tsc:*)",
       "Bash(npm run build:*)",
       "Bash(curl:*)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(find:*)",
+      "Bash(pkill:*)",
+      "Bash(npm run typecheck:*)"
     ]
   },
   "outputStyle": "default"

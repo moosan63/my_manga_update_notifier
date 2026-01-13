@@ -102,7 +102,7 @@ export const MangaList: FC<MangaListProps> = ({ mangas }) => {
   return (
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {mangas.map((manga) => {
-        const dayInfo = DAYS_OF_WEEK_DATA[manga.dayOfWeek]
+        const dayInfo = manga.dayOfWeek !== null ? DAYS_OF_WEEK_DATA[manga.dayOfWeek] : null
         const thumbnailColor = getThumbnailColor(manga.title)
         return (
           <div
@@ -117,13 +117,21 @@ export const MangaList: FC<MangaListProps> = ({ mangas }) => {
                   {manga.title.charAt(0)}
                 </span>
               </div>
-              {/* Day badge */}
+              {/* Schedule badge */}
               <div class="absolute top-4 right-4">
-                <div class={`px-3 py-1.5 rounded-full ${dayInfo.bgColor} backdrop-blur-sm border border-white/10`}>
-                  <span class={`text-sm font-bold ${dayInfo.textColor}`}>
-                    {dayInfo.fullLabel}
-                  </span>
-                </div>
+                {dayInfo ? (
+                  <div class={`px-3 py-1.5 rounded-full ${dayInfo.bgColor} backdrop-blur-sm border border-white/10`}>
+                    <span class={`text-sm font-bold ${dayInfo.textColor}`}>
+                      {manga.scheduleType === 'biweekly' ? `隔週 ${dayInfo.label}曜` : dayInfo.fullLabel}
+                    </span>
+                  </div>
+                ) : manga.monthlyDays ? (
+                  <div class="px-3 py-1.5 rounded-full bg-gaming-purple/20 backdrop-blur-sm border border-white/10">
+                    <span class="text-sm font-bold text-gaming-purple-light">
+                      毎月 {manga.monthlyDays.slice(0, 3).join(', ')}{manga.monthlyDays.length > 3 ? '...' : ''}日
+                    </span>
+                  </div>
+                ) : null}
               </div>
             </div>
 
