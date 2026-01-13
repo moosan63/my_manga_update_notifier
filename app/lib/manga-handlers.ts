@@ -44,29 +44,95 @@ export function toManga(row: MangaRow): Manga {
   }
 }
 
+// バリデーション成功時の戻り値
+interface ValidationSuccess {
+  valid: true
+  title: string
+  url: string
+  scheduleType: ScheduleType
+  dayOfWeek: number | null
+  monthlyDays: number[] | null
+  baseDate: string | null
+}
+
+// バリデーション失敗時の戻り値
+interface ValidationError {
+  valid: false
+  error: string
+}
+
 // バリデーション関数
-export function validateMangaInput(
-  data: unknown
-): { valid: true; title: string; url: string; dayOfWeek: number } | { valid: false; error: string } {
+export function validateMangaInput(data: unknown): ValidationSuccess | ValidationError {
   if (typeof data !== 'object' || data === null) {
     return { valid: false, error: 'Invalid request body' }
   }
 
-  const { title, url, dayOfWeek } = data as Record<string, unknown>
+  const { title, url, scheduleType, dayOfWeek, monthlyDays } = data as Record<string, unknown>
 
+  // title バリデーション
   if (typeof title !== 'string' || title.trim() === '') {
     return { valid: false, error: 'title is required' }
   }
 
+  // url バリデーション
   if (typeof url !== 'string' || url.trim() === '') {
     return { valid: false, error: 'url is required' }
   }
 
-  if (typeof dayOfWeek !== 'number' || dayOfWeek < 0 || dayOfWeek > 6) {
-    return { valid: false, error: 'dayOfWeek must be between 0 and 6' }
+  // scheduleType バリデーション
+  if (scheduleType !== 'weekly' && scheduleType !== 'biweekly' && scheduleType !== 'monthly') {
+    return { valid: false, error: 'scheduleType must be "weekly", "biweekly", or "monthly"' }
   }
 
-  return { valid: true, title: title.trim(), url: url.trim(), dayOfWeek }
+  // scheduleType別のバリデーション
+  if (scheduleType === 'weekly' || scheduleType === 'biweekly') {
+    // weekly/biweekly: dayOfWeekが必須
+    if (typeof dayOfWeek !== 'number' || dayOfWeek < 0 || dayOfWeek > 6) {
+      return { valid: false, error: 'dayOfWeek must be between 0 and 6 for weekly/biweekly schedule' }
+    }
+
+    // biweeklyの場合、baseDateは新規登録時に自動設定される（ここではnullを返す）
+    return {
+      valid: true,
+      title: title.trim(),
+      url: url.trim(),
+      scheduleType,
+      dayOfWeek,
+      monthlyDays: null,
+      baseDate: null
+    }
+  } else {
+    // monthly: monthlyDaysが必須
+    if (!Array.isArray(monthlyDays) || monthlyDays.length === 0) {
+      return { valid: false, error: 'monthlyDays is required and must not be empty for monthly schedule' }
+    }
+
+    // monthlyDaysの各要素が1-31の範囲かチェック
+    for (const day of monthlyDays) {
+      if (typeof day !== 'number' || day < 1 || day > 31) {
+        return { valid: false, error: 'monthlyDays must contain numbers between 1 and 31' }
+      }
+    }
+
+    return {
+      valid: true,
+      title: title.trim(),
+      url: url.trim(),
+      scheduleType,
+      dayOfWeek: null,
+      monthlyDays,
+      baseDate: null
+    }
+  }
+}
+
+// 現在日付をYYYY-MM-DD形式で取得
+function getCurrentDate(): string {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 
 // GET /api/mangas - 漫画一覧取得
@@ -86,15 +152,21 @@ export async function postMangaHandler(c: Context<{ Bindings: { DB: D1Database }
     return c.json({ error: validation.error }, 400)
   }
 
-  const { title, url, dayOfWeek } = validation
+  const { title, url, scheduleType, dayOfWeek, monthlyDays } = validation
   const db = c.env.DB
   const now = new Date().toISOString().replace('T', ' ').replace('Z', '').slice(0, 19)
 
+  // biweeklyの場合、baseDateに現在日付を設定
+  const baseDate = scheduleType === 'biweekly' ? getCurrentDate() : null
+  const monthlyDaysJson = monthlyDays ? JSON.stringify(monthlyDays) : null
+
   const result = await db
     .prepare(
-      'INSERT INTO mangas (title, url, day_of_week, created_at, updated_at) VALUES (?, ?, ?, ?, ?) RETURNING *'
+      `INSERT INTO mangas (title, url, schedule_type, day_of_week, monthly_days, base_date, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+       RETURNING *`
     )
-    .bind(title, url, dayOfWeek, now, now)
+    .bind(title, url, scheduleType, dayOfWeek, monthlyDaysJson, baseDate, now, now)
     .first<MangaRow>()
 
   if (!result) {
@@ -114,20 +186,37 @@ export async function putMangaHandler(c: Context<{ Bindings: { DB: D1Database } 
     return c.json({ error: validation.error }, 400)
   }
 
-  const { title, url, dayOfWeek } = validation
+  const { title, url, scheduleType, dayOfWeek, monthlyDays } = validation
   const db = c.env.DB
 
-  // 存在確認
-  const existing = await db.prepare('SELECT id FROM mangas WHERE id = ?').bind(id).first()
+  // 存在確認と既存データ取得
+  const existing = await db
+    .prepare('SELECT * FROM mangas WHERE id = ?')
+    .bind(id)
+    .first<MangaRow>()
+
   if (!existing) {
     return c.json({ error: 'Manga not found' }, 404)
   }
 
   const now = new Date().toISOString().replace('T', ' ').replace('Z', '').slice(0, 19)
 
+  // biweeklyに変更される場合、既存のbaseDateがなければ現在日付を設定
+  let baseDate: string | null = null
+  if (scheduleType === 'biweekly') {
+    baseDate = existing.base_date || getCurrentDate()
+  }
+
+  const monthlyDaysJson = monthlyDays ? JSON.stringify(monthlyDays) : null
+
   const result = await db
-    .prepare('UPDATE mangas SET title = ?, url = ?, day_of_week = ?, updated_at = ? WHERE id = ? RETURNING *')
-    .bind(title, url, dayOfWeek, now, id)
+    .prepare(
+      `UPDATE mangas
+       SET title = ?, url = ?, schedule_type = ?, day_of_week = ?, monthly_days = ?, base_date = ?, updated_at = ?
+       WHERE id = ?
+       RETURNING *`
+    )
+    .bind(title, url, scheduleType, dayOfWeek, monthlyDaysJson, baseDate, now, id)
     .first<MangaRow>()
 
   if (!result) {
