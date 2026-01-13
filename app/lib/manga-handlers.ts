@@ -1,11 +1,17 @@
 import type { Context } from 'hono'
 
+// スケジュールタイプの定義
+export type ScheduleType = 'weekly' | 'biweekly' | 'monthly'
+
 // Manga型の定義
 export interface Manga {
   id: number
   title: string
   url: string
-  dayOfWeek: number
+  scheduleType: ScheduleType
+  dayOfWeek: number | null
+  monthlyDays: number[] | null
+  baseDate: string | null
   createdAt: string
   updatedAt: string
 }
@@ -15,7 +21,10 @@ export interface MangaRow {
   id: number
   title: string
   url: string
-  day_of_week: number
+  schedule_type: string
+  day_of_week: number | null
+  monthly_days: string | null
+  base_date: string | null
   created_at: string
   updated_at: string
 }
@@ -26,7 +35,10 @@ export function toManga(row: MangaRow): Manga {
     id: row.id,
     title: row.title,
     url: row.url,
+    scheduleType: row.schedule_type as ScheduleType,
     dayOfWeek: row.day_of_week,
+    monthlyDays: row.monthly_days ? JSON.parse(row.monthly_days) : null,
+    baseDate: row.base_date,
     createdAt: row.created_at,
     updatedAt: row.updated_at
   }
