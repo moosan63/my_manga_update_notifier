@@ -1,29 +1,8 @@
 import { sendSlackNotification } from './slack'
-
-// DBから取得したレコードの型
-interface MangaRow {
-  id: number
-  title: string
-  url: string
-  day_of_week: number
-  created_at: string
-  updated_at: string
-}
+import { shouldNotify } from './schedule-utils'
+import { toManga, type MangaRow } from './manga-handlers'
 
 const SLACK_WEBHOOK_URL_KEY = 'slack_webhook_url'
-
-/**
- * UTCの日時からJSTの曜日を取得する
- * UTC + 9時間 = JST
- * @param date 日時（UTC）
- * @returns 曜日（0=日, 1=月, ..., 6=土）
- */
-export function getJSTDayOfWeek(date: Date): number {
-  // JSTはUTC+9
-  const jstOffset = 9 * 60 * 60 * 1000
-  const jstDate = new Date(date.getTime() + jstOffset)
-  return jstDate.getUTCDay()
-}
 
 /**
  * スケジュールされたイベントを処理する
@@ -47,25 +26,28 @@ export async function handleScheduled(
     return
   }
 
-  // 2. 現在の曜日を取得（JST）
-  const dayOfWeek = getJSTDayOfWeek(scheduledTime)
+  // 2. D1から全漫画を取得
+  const mangasResult = await db.prepare('SELECT * FROM mangas').all<MangaRow>()
 
-  // 3. D1から該当曜日の漫画を取得
-  const mangasResult = await db
-    .prepare('SELECT * FROM mangas WHERE day_of_week = ?')
-    .bind(dayOfWeek)
-    .all<MangaRow>()
+  const rows = mangasResult.results || []
+  if (rows.length === 0) {
+    console.log('No manga registered. Skipping notifications.')
+    return
+  }
 
-  const mangas = mangasResult.results || []
-  if (mangas.length === 0) {
-    console.log(`No manga updates scheduled for day ${dayOfWeek}. Skipping notifications.`)
+  // 3. shouldNotify()で通知対象をフィルタリング
+  const mangas = rows.map(toManga)
+  const mangasToNotify = mangas.filter((manga) => shouldNotify(manga, scheduledTime))
+
+  if (mangasToNotify.length === 0) {
+    console.log('No manga updates scheduled for today. Skipping notifications.')
     return
   }
 
   // 4. 各漫画についてSlackに通知
-  console.log(`Sending notifications for ${mangas.length} manga(s) on day ${dayOfWeek}`)
+  console.log(`Sending notifications for ${mangasToNotify.length} manga(s)`)
 
-  for (const manga of mangas) {
+  for (const manga of mangasToNotify) {
     try {
       const success = await sendSlackNotification(webhookUrl, {
         title: manga.title,
